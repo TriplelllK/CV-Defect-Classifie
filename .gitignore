@@ -1,0 +1,28 @@
+# Виртуальные окружения
+.venv/
+venv/
+env/
+
+# Python мусор
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Jupyter
+*.ipynb
+.ipynb_checkpoints/
+
+# Датасеты (НЕ пушим в git)
+NEU_surface_defects/
+
+# Тяжёлые модели (НЕ пушим в git)
+*.keras
+*.h5
+
+# IDE / ОС
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

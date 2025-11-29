@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Классификация дефектов металла</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Классификация дефектов металлических поверхностей</h1>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash">
+          {% for msg in messages %}
+            <div>{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="upload-form">
+        <form method="post" enctype="multipart/form-data">
+            <label for="file">Загрузите изображение дефекта (JPG/PNG):</label><br><br>
+            <input type="file" name="file" id="file" accept="image/*" required>
+            <br><br>
+            <button type="submit">Анализировать</button>
+        </form>
+    </div>
+
+    {% if pred_class %}
+    <div class="result">
+        <h2>Результат</h2>
+        <p><strong>Предсказанный класс:</strong> {{ pred_class }}</p>
+        <p><strong>Уверенность модели:</strong> {{ (confidence * 100) | round(2) }}%</p>
+
+        <h3>Вероятности по всем классам:</h3>
+        <table>
+            <tr>
+                <th>Класс</th>
+                <th>Вероятность, %</th>
+            </tr>
+            {% for cls, prob in probs.items() %}
+            <tr>
+                <td>{{ cls }}</td>
+                <td>{{ (prob * 100) | round(2) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+</body>
+</html>
