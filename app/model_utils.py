@@ -1,4 +1,4 @@
-# app/model_utils.py
+# model util
 import os
 import numpy as np
 from PIL import Image
@@ -8,12 +8,12 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "models", "neu_best_finetuned.keras")
 CLASS_NAMES_PATH = os.path.join(BASE_DIR, "models", "class_names.txt")
 
-IMG_SIZE = (200, 200)  # важно: как в обучении ResNet50V2
+IMG_SIZE = (200, 200)  # same as train
 
-# Загружаем модель один раз при старте приложения
+# load model once
 model = tf.keras.models.load_model(MODEL_PATH)
 
-# Загружаем имена классов в правильном порядке
+# load names
 with open(CLASS_NAMES_PATH, "r", encoding="utf-8") as f:
     class_names = [line.strip() for line in f.readlines() if line.strip()]
 
@@ -28,7 +28,7 @@ def preprocess_image(file) -> np.ndarray:
 
     img = Image.open(file).convert("RGB")
     img = img.resize(IMG_SIZE)
-    img_array = np.array(img).astype("float32") / 255.0  # ВАЖНО: делим на 255
+    img_array = np.array(img).astype("float32") / 255.0  # norm
     img_batch = np.expand_dims(img_array, axis=0)
     return img_batch
 

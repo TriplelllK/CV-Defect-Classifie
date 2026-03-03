@@ -14,15 +14,20 @@ __pycache__/
 *.ipynb
 .ipynb_checkpoints/
 
-# Датасеты (НЕ пушим в git)
+# Датасеты
 NEU_surface_defects/
 
-# Тяжёлые модели (НЕ пушим в git)
+# Тяжёлые модели
 *.keras
 *.h5
 
-# IDE / ОС
+# IDE/ОС
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+
+# outputs
+results/
+training/*.png
+training/*.txt

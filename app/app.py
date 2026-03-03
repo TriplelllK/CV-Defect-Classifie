@@ -1,4 +1,4 @@
-# app/app.py
+# app file
 from flask import (
     Flask,
     render_template,
@@ -10,7 +10,7 @@ from flask import (
 from .model_utils import predict_defect
 
 app = Flask(__name__)
-app.secret_key = "super-secret-key"  # замени на свой
+app.secret_key = "super-secret-key"  # change pls
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -41,7 +41,7 @@ def index():
             flash(f"Ошибка при обработке файла: {e}")
             return redirect(request.url)
 
-    # GET-запрос
+    # get
     return render_template("index.html")
 
 
@@ -111,5 +111,5 @@ def health():
 
 
 if __name__ == "__main__":
-    # Локальный запуск без Docker / gunicorn
+    # run local
     app.run(host="0.0.0.0", port=5000, debug=True)

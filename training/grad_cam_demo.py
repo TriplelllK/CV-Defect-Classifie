@@ -11,19 +11,23 @@ from tensorflow.keras.preprocessing import image as keras_image
 tf.config.run_functions_eagerly(True)
 
 
-
 IMG_SIZE = (200, 200)  
 
+# base dir
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-MODEL_PATH = r"C:\Users\Kuat\Documents\AI engineering course\cv-defect-classifier\neu_best_resnet50v2.keras"
-CLASS_NAMES_PATH = r"C:\Users\Kuat\Documents\AI engineering course\cv-defect-classifier\class_names.txt"
+# paths
+MODEL_PATH = os.path.join(BASE_DIR, "app", "models", "neu_best_finetuned.keras")
+CLASS_NAMES_PATH = os.path.join(BASE_DIR, "app", "models", "class_names.txt")
 
+# sample img
+# change path maybe
+EXAMPLE_IMG = os.path.join(BASE_DIR, "datasets", "validation", "images")
 
-IMG_PATH = r"C:\Users\Kuat\Documents\AI engineering course\cv-defect-classifier\NEU_surface_defects\validation\images\inclusion\inclusion_255.jpg"
-
-print("MODEL_PATH:", MODEL_PATH)
-print("CLASS_NAMES_PATH:", CLASS_NAMES_PATH)
-print("IMG_PATH:", IMG_PATH)
+print(f"Base directory: {BASE_DIR}")
+print(f"MODEL_PATH: {MODEL_PATH}")
+print(f"CLASS_NAMES_PATH: {CLASS_NAMES_PATH}")
+print(f"EXAMPLE_IMG dir: {EXAMPLE_IMG}")
 
 
 
@@ -33,8 +37,26 @@ if not os.path.isfile(MODEL_PATH):
 if not os.path.isfile(CLASS_NAMES_PATH):
     raise FileNotFoundError(f"class_names.txt не найден по пути:\n{CLASS_NAMES_PATH}")
 
-if not os.path.isfile(IMG_PATH):
-    raise FileNotFoundError(f"Изображение не найдено по пути:\n{IMG_PATH}")
+# find img
+def find_sample_image(base_img_dir):
+    """Ищет первое изображение в подпапках классов"""
+    if not os.path.isdir(base_img_dir):
+        return None
+    
+    for class_dir in os.listdir(base_img_dir):
+        class_path = os.path.join(base_img_dir, class_dir)
+        if os.path.isdir(class_path):
+            for img_file in os.listdir(class_path):
+                if img_file.lower().endswith(('.jpg', '.jpeg', '.png', '.bmp')):
+                    return os.path.join(class_path, img_file)
+    return None
+
+IMG_PATH = find_sample_image(EXAMPLE_IMG)
+
+if not IMG_PATH:
+    raise FileNotFoundError(f"Изображения не найдены в {EXAMPLE_IMG}\nПожалуйста, поместите изображение в datasets/validation/images/")
+
+print(f"\nИспользуется изображение: {IMG_PATH}")
 
 
 
@@ -162,4 +184,15 @@ def show_gradcam(img_path):
 
 
 if __name__ == "__main__":
+    print("\n" + "="*60)
+    print("GRAD-CAM VISUALIZATION")
+    print("="*60)
+    
+    # show one img
     show_gradcam(IMG_PATH)
+    
+    # maybe more imgs
+    print("\n" + "-"*60)
+    print("Если хотите обработать другое изображение, вызовите:")
+    print('  show_gradcam("путь/к/изображению.jpg")')
+    print("="*60)
