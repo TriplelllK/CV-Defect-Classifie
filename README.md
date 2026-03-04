@@ -29,7 +29,7 @@
 ### 1. Клонируйте репозиторий
 
 ```bash
-cd c:\Users\kdyus\Documents\CV-Defect-Classifie
+cd c:\Users\Documents\CV-Defect-Classifie
 ```
 
 ### 2. Создайте виртуальную среду
@@ -57,7 +57,7 @@ pip install -r requirements.txt
 ### 5. Подготовьте датасет
 
 Скачайте **NEU Surface Defects dataset**:
-- GitHub: https://github.com/abnormally/NEU_surface_defects_data
+- GitHub: [https://github.com/abnormally/NEU_surface_defects_data](https://www.kaggle.com/datasets/kaustubhdikshit/neu-surface-defect-database?resource=download)
 
 Выпакуйте его в папку `datasets/` проекта со следующей структурой:
 
@@ -325,11 +325,11 @@ show_gradcam(r"datasets/validation/images/scratches/scratches_123.jpg")
 
 #### Пример результата
 
-![Grad-CAM пример](results/grad_cam4.png)
+![Grad-CAM пример](images/grad_cam4.png)
 
 #### Скриншот приложения
 
-![Приложение результат](results/output_sample.png)
+![Приложение результат](images/output_sample.png)
 
 ---
 
@@ -423,21 +423,6 @@ print(f"Дефект: {predict_class}, уверенность: {confidence:.2%}"
 ## 📝 Лицензия
 
 Проект распространяется под лицензией MIT. Подробности в файле LICENSE.
-
----
-
-## 📚 Дополнительные материалы
-
-### Статьи и исследования
-- [ResNet Paper (He et al., 2015)](https://arxiv.org/abs/1512.03385) — архитектура нашей модели
-- [Grad-CAM Paper (Selvaraju et al., 2016)](https://arxiv.org/abs/1610.02055) — визуализация решений
-- [Transfer Learning в Keras](https://keras.io/guides/transfer_learning/) — подход использованный в проекте
-
-### Полезные ссылки
-- [TensorFlow документация](https://www.tensorflow.org/)
-- [Flask документация](https://flask.palletsprojects.com/)
-- [OpenCV документация](https://docs.opencv.org/)
-- [scikit-learn для метрик](https://scikit-learn.org/)
 
 ---
 
