@@ -142,33 +142,6 @@ curl -X POST -F "file=@image.jpg" http://localhost:5000/api/predict
 }
 ```
 
----
-
-## 📁 Структура проекта
-
-```
-CV-Defect-Classifie/
-├── app/                         # Flask приложение
-│   ├── __init__.py
-│   ├── app.py                   # Главное приложение
-│   ├── model_utils.py           # Утилиты для работы с моделью
-│   ├── models/
-│   │   ├── class_names.txt      # Названия классов
-│   │   └── neu_best_finetuned.keras  # Предобученная модель
-│   ├── static/
-│   │   └── style.css            # Стили приложения
-│   └── templates/
-│       └── index.html           # Главная страница
-├── training/
-│   ├── train_neu_model.py       # Скрипт обучения модели
-│   └── grad_cam_demo.py         # Визуализация внимания модели
-├── requirements.txt             # Зависимости проекта
-├── Dockerfile                   # Конфигурация Docker
-└── README.md                    # Этот файл
-```
-
----
-
 ## 🐳 Развертывание с Docker
 
 ### Сборка образа
