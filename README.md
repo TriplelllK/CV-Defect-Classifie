@@ -57,7 +57,7 @@ pip install -r requirements.txt
 ### 5. Подготовьте датасет
 
 Скачайте **NEU Surface Defects dataset**:
-- GitHub: [https://github.com/abnormally/NEU_surface_defects_data](https://www.kaggle.com/datasets/kaustubhdikshit/neu-surface-defect-database?resource=download)
+- Kaggle: [NEU_surface_defects_data](https://www.kaggle.com/datasets/kaustubhdikshit/neu-surface-defect-database?resource=download)
 
 Выпакуйте его в папку `datasets/` проекта со следующей структурой:
 
@@ -241,7 +241,7 @@ Dense(6, Softmax) [выходной слой]
 - Loss (train vs validation)
 - кол-во эпох
 
-![Training History](training/results/training_history.png)
+![Training History](training/images/training_history.png)
 
 #### 2. **confusion_matrix.png**
 Матрица ошибок классификации:
@@ -249,7 +249,7 @@ Dense(6, Softmax) [выходной слой]
 - по диагонали — правильные предсказания
 - вне диагонали — ошибки
 
-![Confusion Matrix](training/results/confusion_matrix.png)
+![Confusion Matrix](training/images/confusion_matrix.png)
 
 #### 3. **classification_report.txt**
 Детальный отчет с метриками:
