@@ -31,7 +31,7 @@ print(f"Val dir: {DATA_DIR_VAL}")
 assert os.path.isdir(DATA_DIR_TRAIN), f"Train dir not found: {DATA_DIR_TRAIN}"
 assert os.path.isdir(DATA_DIR_VAL), f"Val dir not found: {DATA_DIR_VAL}"
 
-print("✓ Датасет найден!")
+print("Датасет найден")
 
 
 # Аугментация
@@ -192,7 +192,7 @@ def plot_history(history, save_path=None):
     
     if save_path:
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
-        print(f"✓ График сохранён: {save_path}")
+        print(f"Сохранен график: {save_path}")
     
     plt.show()
 
@@ -225,7 +225,7 @@ with open(report_path, "w", encoding="utf-8") as f:
     f.write("- Recall: доля верно предсказанных примеров класса\n")
     f.write("- F1-score: среднее гармоническое precision и recall\n")
     f.write("- Support: количество примеров класса в тестовом наборе\n")
-print(f"✓ Classification report сохранён: {report_path}")
+print(f"Сохранен classification report: {report_path}")
 
 # Матрица ошибок
 cm = confusion_matrix(y_true, y_pred)
@@ -258,7 +258,7 @@ plt.tight_layout()
 
 cm_path = os.path.join(RESULTS_DIR, "confusion_matrix.png")
 plt.savefig(cm_path, dpi=300, bbox_inches='tight')
-print(f"✓ Confusion matrix сохранена: {cm_path}")
+print(f"Сохранена confusion matrix: {cm_path}")
 plt.show()
 
 
@@ -275,18 +275,9 @@ with open(class_names_path, "w", encoding="utf-8") as f:
     for name in target_names:
         f.write(name + "\n")
 
-print("\n" + "=" * 60)
-print("✓ ОБУЧЕНИЕ ЗАВЕРШЕНО УСПЕШНО!")
-print("=" * 60)
-print("\nСохранённые файлы для приложения:")
-print(f"  📁 Модель: {final_model_path}")
-print(f"  📄 Классы: {class_names_path}")
-print("\n📊 Результаты метрик и графики:")
-print(f"  📁 Папка: {RESULTS_DIR}/")
-print("     📈 training_history.png - графики accuracy и loss")
-print("     🔲 confusion_matrix.png - матрица ошибок")
-print("     📋 classification_report.txt - детальный отчёт")
-print("\nЧтобы запустить приложение:")
-print("  python -m app.app")
-print("  или: flask run")
-print("=" * 60)
+print("\nОбучение завершено")
+print("Файлы:")
+print(f"- Модель: {final_model_path}")
+print(f"- Классы: {class_names_path}")
+print(f"- Результаты: {RESULTS_DIR}/")
+print("Запуск приложения: python -m app.app или flask run")

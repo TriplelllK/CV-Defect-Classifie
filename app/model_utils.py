@@ -9,16 +9,16 @@ CLASS_NAMES_PATH = os.path.join(BASE_DIR, "models", "class_names.txt")
 
 IMG_SIZE = (200, 200)  # размер как при обучении
 
-# Загружаем модель один раз
+# Загружаем модель
 model = tf.keras.models.load_model(MODEL_PATH)
 
-# Загружаем имена классов
+# Загружаем классы
 with open(CLASS_NAMES_PATH, "r", encoding="utf-8") as f:
     class_names = [line.strip() for line in f.readlines() if line.strip()]
 
 
 def preprocess_image(file) -> np.ndarray:
-    # Готовим изображение для модели
+    # Подготовка изображения
     file.stream.seek(0)
 
     img = Image.open(file).convert("RGB")
@@ -29,7 +29,7 @@ def preprocess_image(file) -> np.ndarray:
 
 
 def predict_defect(file):
-    # Возвращает класс, уверенность и вероятности
+    # Предсказание класса и вероятностей
     img_batch = preprocess_image(file)
     preds = model.predict(img_batch, verbose=0)[0]
     pred_idx = int(np.argmax(preds))

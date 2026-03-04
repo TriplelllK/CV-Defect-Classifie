@@ -2,11 +2,11 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Классификация дефектов металла</title>
+  <title>Определение дефекта</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Классификация дефектов металлических поверхностей</h1>
+  <h1>Определение дефекта по фото</h1>
 
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -20,20 +20,20 @@
 
     <div class="upload-form">
         <form method="post" enctype="multipart/form-data">
-            <label for="file">Загрузите изображение дефекта (JPG/PNG):</label><br><br>
+        <label for="file">Выберите изображение (JPG/PNG):</label><br><br>
             <input type="file" name="file" id="file" accept="image/*" required>
             <br><br>
-            <button type="submit">Анализировать</button>
+        <button type="submit">Проверить</button>
         </form>
     </div>
 
     {% if pred_class %}
     <div class="result">
         <h2>Результат</h2>
-        <p><strong>Предсказанный класс:</strong> {{ pred_class }}</p>
-        <p><strong>Уверенность модели:</strong> {{ (confidence * 100) | round(2) }}%</p>
+      <p><strong>Класс:</strong> {{ pred_class }}</p>
+      <p><strong>Уверенность:</strong> {{ (confidence * 100) | round(2) }}%</p>
 
-        <h3>Вероятности по всем классам:</h3>
+      <h3>Вероятности по классам:</h3>
         <table>
             <tr>
                 <th>Класс</th>

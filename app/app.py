@@ -14,16 +14,16 @@ app.secret_key = "super-secret-key"  # TODO: поменять в проде
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    # Страница с загрузкой файла
+    # Страница загрузки
     if request.method == "POST":
         if "file" not in request.files:
-            flash("Файл не найден в запросе.")
+            flash("Нет поля file в запросе")
             return redirect(request.url)
 
         file = request.files["file"]
 
         if file.filename == "":
-            flash("Файл не выбран.")
+            flash("Файл не выбран")
             return redirect(request.url)
 
         try:
@@ -35,7 +35,7 @@ def index():
                 probs=probs_dict,
             )
         except Exception as e:
-            flash(f"Ошибка при обработке файла: {e}")
+            flash(f"Не удалось обработать файл: {e}")
             return redirect(request.url)
 
     # GET-запрос
@@ -44,12 +44,12 @@ def index():
 
 @app.route("/api/predict", methods=["POST"])
 def api_predict():
-        # API для предсказания по изображению
+    # API для предсказания
     if "file" not in request.files:
         return jsonify(
             {
                 "success": False,
-                "error": "Поле 'file' не найдено в запросе",
+                "error": "Нет поля 'file' в запросе",
             }
         ), 400
 
@@ -79,14 +79,14 @@ def api_predict():
         return jsonify(
             {
                 "success": False,
-                "error": f"Ошибка при обработке файла: {str(e)}",
+                "error": f"Не удалось обработать файл: {str(e)}",
             }
         ), 500
 
 
 @app.route("/api/health", methods=["GET"])
 def health():
-    # Проверка, что сервис запущен
+    # Проверка сервиса
     return jsonify({"status": "ok"}), 200
 
 

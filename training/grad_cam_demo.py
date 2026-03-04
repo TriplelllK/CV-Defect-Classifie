@@ -49,9 +49,9 @@ def find_sample_image(base_img_dir):
 IMG_PATH = find_sample_image(EXAMPLE_IMG)
 
 if not IMG_PATH:
-    raise FileNotFoundError(f"Изображения не найдены в {EXAMPLE_IMG}\nПожалуйста, поместите изображение в datasets/validation/images/")
+    raise FileNotFoundError(f"Изображения не найдены в {EXAMPLE_IMG}. Добавьте файл в datasets/validation/images/")
 
-print(f"\nИспользуется изображение: {IMG_PATH}")
+print(f"\nИзображение: {IMG_PATH}")
 
 
 
@@ -124,7 +124,7 @@ def make_gradcam_heatmap(img_array_batch):
 
 def show_gradcam(img_path):
     # Показываем Grad-CAM для одного изображения
-    print(f"\nОбработка изображения: {img_path}")
+    print(f"\nОбработка: {img_path}")
     img_batch, img_array = load_and_preprocess_image(img_path)
 
     heatmap, preds = make_gradcam_heatmap(img_batch)
@@ -163,19 +163,15 @@ def show_gradcam(img_path):
     plt.tight_layout()
     plt.show()
 
-    print(f"Предсказанный класс: {pred_class}, уверенность: {confidence*100:.2f}%")
+    print(f"Класс: {pred_class}, уверенность: {confidence*100:.2f}%")
 
 
 if __name__ == "__main__":
-    print("\n" + "="*60)
-    print("GRAD-CAM VISUALIZATION")
-    print("="*60)
+    print("\nGrad-CAM")
 
     # Показываем пример
     show_gradcam(IMG_PATH)
 
     # Подсказка для другого файла
-    print("\n" + "-"*60)
-    print("Если хотите обработать другое изображение, вызовите:")
-    print('  show_gradcam("путь/к/изображению.jpg")')
-    print("="*60)
+    print("\nДля другого файла вызовите:")
+    print('show_gradcam("путь/к/изображению.jpg")')
