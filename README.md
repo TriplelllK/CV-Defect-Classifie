@@ -1,6 +1,6 @@
 # CV Defect Classifier 🔍
 
-Веб-приложение на Flask для классификации дефектов поверхности с использованием глубокого обучения. Приложение использует обученную модель ResNet50V2 для детектирования и классификации различных типов дефектов на промышленных поверхностях.
+Веб-приложение на Flask для классификации дефектов поверхности металла с использованием глубокого обучения. Приложение использует обученную модель ResNet50V2 для детектирования и классификации различных типов дефектов на промышленных поверхностях.
 
 ---
 
@@ -17,49 +17,30 @@
 
 ## 📋 Требования
 
-- **Python 3.11+** 
-- **TensorFlow 2.13.0+**
-- **Flask 3.1.3+**
-- Остальные зависимости указаны в `requirements.txt`
+- Flask==3.1.3
+- tensorflow-cpu==2.13.0
+- Pillow
+- numpy
+- gunicorn
+- matplotlib
+- scikit-learn
+- opencv-python
 
 ---
 
-## 🚀 Установка
+## Датасет
 
-### 1. Клонируйте репозиторий
+**NEU Surface Defects dataset**:
+- kaggle: https://www.kaggle.com/datasets/kaustubhdikshit/neu-surface-defect-database
 
-```bash
-cd c:\Users\kdyus\Documents\CV-Defect-Classifie
-```
 
-### 2. Создайте виртуальную среду
 
-```powershell
-py -3.11 -m venv .venv
-```
+---
 
-### 3. Активируйте виртуальную среду
+## Структура проекта
 
-```powershell
-# Windows
-.\.venv\Scripts\Activate
 
-# Linux/Mac
-source .venv/bin/activate
-```
 
-### 4. Установите зависимости
-
-```bash
-pip install -r requirements.txt
-```
-
-### 5. Подготовьте датасет
-
-Скачайте **NEU Surface Defects dataset**:
-- GitHub: https://github.com/abnormally/NEU_surface_defects_data
-
-Выпакуйте его в папку `datasets/` проекта со следующей структурой:
 
 ```
 datasets/
@@ -81,7 +62,40 @@ datasets/
         └── scratches/
 ```
 
-### 6. Обучите модель
+
+## Установка
+
+#### 1. Клонируйте репозиторий
+
+```bash
+cd c:\Users\kdyus\Documents\CV-Defect-Classifie
+```
+
+#### 2. Создайте виртуальную среду
+
+```powershell
+py -3.11 -m venv .venv
+```
+
+#### 3. Активируйте виртуальную среду
+
+```powershell
+# Windows
+.\.venv\Scripts\Activate
+
+# Linux/Mac
+source .venv/bin/activate
+```
+
+#### 4. Установите зависимости
+
+```bash
+pip install -r requirements.txt
+```
+
+
+
+#### 5. Обучите модель
 
 ```bash
 python -m training.train_neu_model
@@ -126,7 +140,7 @@ python -m app.app
 curl -X POST -F "file=@image.jpg" http://localhost:5000/api/predict
 ```
 
-**Ответ:**
+**Пример ответа:**
 
 ```json
 {
@@ -144,40 +158,17 @@ curl -X POST -F "file=@image.jpg" http://localhost:5000/api/predict
 
 ---
 
-## 📁 Структура проекта
 
-```
-CV-Defect-Classifie/
-├── app/                         # Flask приложение
-│   ├── __init__.py
-│   ├── app.py                   # Главное приложение
-│   ├── model_utils.py           # Утилиты для работы с моделью
-│   ├── models/
-│   │   ├── class_names.txt      # Названия классов
-│   │   └── neu_best_finetuned.keras  # Предобученная модель
-│   ├── static/
-│   │   └── style.css            # Стили приложения
-│   └── templates/
-│       └── index.html           # Главная страница
-├── training/
-│   ├── train_neu_model.py       # Скрипт обучения модели
-│   └── grad_cam_demo.py         # Визуализация внимания модели
-├── requirements.txt             # Зависимости проекта
-├── Dockerfile                   # Конфигурация Docker
-└── README.md                    # Этот файл
-```
-
----
 
 ## 🐳 Развертывание с Docker
 
-### Сборка образа
+#### Сборка образа
 
 ```bash
 docker build -t cv-defect-classifier .
 ```
 
-### Запуск контейнера
+#### Запуск контейнера
 
 ```bash
 docker run -p 5000:5000 cv-defect-classifier
@@ -198,6 +189,10 @@ docker run -p 5000:5000 cv-defect-classifier
 - **Pitted Surface** — точечная коррозия
 - **Rolled-in Scale** — окалина
 - **Scratches** — царапины
+
+Пример из датасета:
+![Dataset_sample](images/dataset_sample.png)
+
 
 ### Архитектура модели:
 ```
@@ -233,26 +228,26 @@ Dense(6, Softmax) [выходной слой]
 
 ### Сохраняемые результаты
 
-После завершения обучения в папке `training/results/` сохраняются:
-
-#### 1. **training_history.png**
-Графики во время обучения:
+После завершения обучения в папке `training/results/` сохраняются: 
+1. графики во время обучения:
 - Accuracy (train vs validation)
 - Loss (train vs validation)
 - кол-во эпох
 
-![Training History](training/results/training_history.png)
+Пример графика:
+![Training History](images/training_history.png)
 
-#### 2. **confusion_matrix.png**
-Матрица ошибок классификации:
+
+2. Матрица ошибок классификации:
 - показывает правильные и неправильные предсказания
 - по диагонали — правильные предсказания
 - вне диагонали — ошибки
 
-![Confusion Matrix](training/results/confusion_matrix.png)
+Пример матрицы:
+![Confusion Matrix](images/confusion_matrix.png)
 
-#### 3. **classification_report.txt**
-Детальный отчет с метриками:
+
+3. Детальный отчет с метриками:
 - **Precision:** доля верных предсказаний среди всех предсказанного класса
 - **Recall:** доля верно предсказанных примеров класса
 - **F1-score:** гармоническое среднее точности и полноты
@@ -281,6 +276,8 @@ weighted avg       0.98      0.98      0.98       360
 
 </details>
 
+
+---
 ### Типичные результаты
 
 На NEU Surface Defects датасете после обучения получаются:
@@ -288,6 +285,10 @@ weighted avg       0.98      0.98      0.98       360
 - **Validation Loss:** ~0.08
 - **Per-class F1-score:** 0.97-0.99
 
+
+
+Пример результата:
+![Confusion Matrix](images/output_sample.png)
 ---
 
 ## 🎨 Grad-CAM визуализация (Объяснимость модели)
@@ -308,6 +309,9 @@ python -m training.grad_cam_demo
   2. **Heatmap** — тепловая карта внимания (красный=высокое внимание)
   3. **Наложение** — Grad-CAM поверх оригинала
 
+Пример GRAD Cam:
+
+![Confusion Matrix](images/grad_cam4.png)
 ### Как интерпретировать результаты
 
 - 🔴 **Красные/жёлтые области** — модель сосредоточена здесь при предсказании
@@ -323,18 +327,6 @@ python -m training.grad_cam_demo
 show_gradcam(r"datasets/validation/images/scratches/scratches_123.jpg")
 ```
 
----
-
-## 🔜 Планы развития
-
-- [ ] Fine-tuning верхних слоев ResNet50V2 (снять freeze)
-- [ ] Experimenting с другими архитектурами (EfficientNet, Vision Transformer)
-- [ ] Поддержка видеопотоков и real-time detection
-- [ ] Развертывание на облачных платформах (AWS, GCP, Azure)
-- [ ] Мобильное приложение (Android/iOS TF Lite)
-- [ ] Логирование предсказаний и аналитика ошибок
-- [ ] A/B тестирование моделей
-- [ ] Интеграция с системами контроля качества
 
 ---
 
@@ -376,62 +368,11 @@ predict_class, confidence, probs = predict_defect(file)
 print(f"Дефект: {predict_class}, уверенность: {confidence:.2%}")
 ```
 
----
-
-## 📝 Лицензия
-
-Проект распространяется под лицензией MIT. Подробности в файле LICENSE.
-
----
-
-## 🤝 Вклад в проект
-
-Приветствуются pull requests и suggestions! Процесс контрибьютинга:
-
-1. **Fork** this repository
-2. **Create feature branch**
-   ```bash
-   git checkout -b feature/amazing-feature
-   ```
-3. **Commit changes** с информативным сообщением
-   ```bash
-   git commit -m 'Add: feature description'
-   ```
-4. **Push to branch**
-   ```bash
-   git push origin feature/amazing-feature
-   ```
-5. **Open a Pull Request** с описанием изменений
-
-### Рекомендации по коду
-- Соблюдайте PEP8
-- Добавляйте docstrings к функциям
-- Тестируйте новый код перед PR
-- Обновляйте README если добавили новый функционал
 
 
 ---
 
-## 📝 Лицензия
 
-Проект распространяется под лицензией MIT. Подробности в файле LICENSE.
-
----
-
-## 📚 Дополнительные материалы
-
-### Статьи и исследования
-- [ResNet Paper (He et al., 2015)](https://arxiv.org/abs/1512.03385) — архитектура нашей модели
-- [Grad-CAM Paper (Selvaraju et al., 2016)](https://arxiv.org/abs/1610.02055) — визуализация решений
-- [Transfer Learning в Keras](https://keras.io/guides/transfer_learning/) — подход использованный в проекте
-
-### Полезные ссылки
-- [TensorFlow документация](https://www.tensorflow.org/)
-- [Flask документация](https://flask.palletsprojects.com/)
-- [OpenCV документация](https://docs.opencv.org/)
-- [scikit-learn для метрик](https://scikit-learn.org/)
-
----
 
 **Сделано с ❤️ для классификации дефектов поверхности промышленного оборудования**
 
